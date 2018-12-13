@@ -1,0 +1,1 @@
+{"{"UID":"1","pos_no":"47000","date_time":"2018-12-14T01:07:43","total_price":48.25,"total_item":1,"cash":50,"change":1.75,"store":{"name":"Indy Restaurant","branch":"KKU","tax_id":"000000001","tele":"","reg_id":"000000001"},"item_data":":{"{"num_of_item":1,"item_name":"*I!\u00153"}":""}}

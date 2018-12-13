@@ -1,29 +1,48 @@
 'use strict';
 
-exports.generate = (req, res) => {
-    console.dir(req.query);
+var firebase = require('./FirebaseAdmin');
+
+exports.generate = async (req, res) => {
     if(req.query.email == null || req.params.email == '')
         res.json({status: 'email is require'});
+    var newBarcode = await genBarcode();
     var bar = {
         status: 'ok',
-        barcode_num: genBarcode(),
+        barcode_num: newBarcode,
         email: req.query.email,
     }
-    res.json(bar);
+    await res.json(bar);
 
-    /*
-     * todo: add the barcode to the database
-    */
+    // remove the old barcode
+    var ref = firebase.database().ref('API_DATA');
+    await ref.orderByChild('email').equalTo(req.query.email)
+    .once('value').then(function(snapshot) {
+        console.log(snapshot.key);
+        snapshot.forEach(function(childSnapshot) {
+            ref.child(childSnapshot.key).remove();
+        });
+    });
+    
+    await firebase.database().ref('API_DATA').push({
+        barcode_num: newBarcode,
+        email: req.query.email
+    });
 
     res.end();
-    console.log('responsed!')
 };
 
-function genBarcode() {
+async function genBarcode() {
     var result = '593040';  // start with 593040
     result += randMinMax(0,99999999).toString();  // random another 8 digits
 
-    /* todo: check if there's have the number or not */
+    var isExist = false;
+    firebase.database().ref('API_DATA')
+    .orderByChild('barcode_num').equalTo(result)
+    .on('child_added', function() {         // regenerate if there exists barcode
+        isExist = true;
+    });
+    if(isExist)
+        return genBarcode();
 
     return result;
 }
