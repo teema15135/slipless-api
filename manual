@@ -1,0 +1,15 @@
+รับ Barcode ของ user ด้วย uid
+    url:8065/getBarcode?uid=<uid>
+
+ล็อคอินทุกครั้งจะต้องตรวจสอบ
+    url:8065/login?uid=<uid>&email=<email>
+
+
+    url:8065/fav?uid=<uid>
+
+    url:8065/recent?uid=<uid>
+
+รับ obj ของ slip ตาม sid
+    url:8065/slip?sid=<sid>
+
+    url:8065/payment?uid=<uid>

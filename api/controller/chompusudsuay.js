@@ -64,6 +64,8 @@ exports.send = async function (req, res) {
     // admin.database().ref('USER_DATA');
     // ref.push(obj).path.pieces_[1]
 
+    // var slip_ID = root.ref('SLIP_DATA').push(slip).path.pieces_[1]; // push slip data to firebase and got slip id
+
     await res.json({
         status: "sent successful!"
     });
