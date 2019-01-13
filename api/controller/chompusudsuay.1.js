@@ -37,17 +37,27 @@ exports.send = async function (req, res) {
     var input_Barcode = input.UID;
     var root = firebase.database();
 
-    await root.ref('BARCODE_DATA/' + input_Barcode).once('value')
-        .then(async function (snapshot) {
-            console.log(snapshot.val());
-            var slip_ID = root.ref('SLIP_DATA').push(slip).path.pieces_[1]; // push slip data to firebase and got slip id
-
-            await root.ref('USER_DATA/' + snapshot.val() + '/slip').push({
-                date_time: input.date_time,
-                slip_id: slip_ID,
-                total_price: input.total_price
+    await root.ref('API_DATA').orderByChild('barcode_num').equalTo(input_Barcode)
+        .on('child_added', async function (snapshot) {
+            // console.log('Found!');
+            var user_email;
+            await root.ref('API_DATA/' + snapshot.key).once('value').then(function (snaps){ 
+                user_email = snapshot.val().email;
+                console.log(user_email);
             });
-            console.log("Pushed slip " + slip_ID + " for user barcode " + input_Barcode);
+            console.log(user_email);
+            console.log("Pushing Data to firebase...");
+            var slip_ID = root.ref('SLIP_DATA').push(slip).path.pieces_[1]; // push slip data to firebase and got slip id
+            await root.ref('USER_DATA').orderByChild('email').equalTo(user_email)
+            .on('child_added', async function (snap) {
+                console.log(snap.key);
+                await root.ref('USER_DATA/' + snap.key + '/slip').push({
+                    date_time: input.date_time,
+                    slip_id: slip_ID,
+                    total_price: input.total_price
+                });
+                console.log("Pushed slip " + slip_ID + " for user barcode " + input_Barcode);
+            });
 
         });
 

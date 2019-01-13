@@ -1,15 +1,27 @@
 รับ Barcode ของ user ด้วย uid
+    GET
     url:8065/getBarcode?uid=<uid>
 
 ล็อคอินทุกครั้งจะต้องตรวจสอบ
+    GET
     url:8065/login?uid=<uid>&email=<email>
 
+    url:8065/fav
+    GET ?uid=<uid>
+    POST ?uid=<uid>&sid=<sid>
 
-    url:8065/fav?uid=<uid>
-
+    GET
     url:8065/recent?uid=<uid>
 
+    POST
+        url:8065/multiSlip
+    - body
+    {
+        "sid" : ["1", "2", "3", "4"]
+    }
+
 รับ obj ของ slip ตาม sid
+    GET
     url:8065/slip?sid=<sid>
 
     url:8065/payment?uid=<uid>
