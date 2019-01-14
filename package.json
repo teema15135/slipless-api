@@ -12,9 +12,10 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "fs": "0.0.1-security",
     "firebase-admin": "^6.4.0",
+    "fs": "0.0.1-security",
     "http": "0.0.0",
+    "mongoose": "^5.4.3",
     "nodemon": "^1.18.8",
     "text2png": "^2.1.0"
   }
