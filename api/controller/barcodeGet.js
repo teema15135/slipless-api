@@ -1,8 +1,10 @@
 'use strict';
 
-var firebase = require('./FirebaseAdmin');
+var mongoose = require('mongoose');
+User = mongoose.model('userData');
+var User = mongoose.model('userData');
 
-exports.getIt = async (req, res) => {
+exports.getIt = (req, res) => {
 
     var uid = req.query.uid;
 
@@ -13,27 +15,21 @@ exports.getIt = async (req, res) => {
         });
     }
 
-    var ref = firebase.database().ref('USER_DATA/' + uid);
-    ref.once('value').then(function (snapshot) {
-        var code = snapshot.child('barcode').val();
-
-        if (code == null) {
+    User.findOne({ _id: uid }, function (err, docs) {
+        console.log(docs);
+        if (docs == null) {
             res.json({
                 status: 'error',
                 message: 'uid is invalid',
             });
             return null;
         }
-
-        var email = snapshot.child('email').val();
         var bar = {
             status: 'ok',
-            barcode_num: code,
-            email: email,
+            barcode_num: docs.barcode,
+            email: docs.email,
             uid: req.query.uid,
         }
         res.json(bar);
     });
-
-
 };

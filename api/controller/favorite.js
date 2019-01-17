@@ -1,11 +1,37 @@
 'use stricts';
 
-exports.get = function(req, res) {
-    console.log('get favorite slip for uid ' + req.query.uid);
-    res.send('get the fav');
+var User = require('../models/userData');
+
+exports.get = function (req, res) {
+    User.findById(req.query.uid, function (err, docs) {
+        res.json(docs.fav);
+    });
 }
 
-exports.add = function(req, res) {
-    console.log('add sid ' + req.query.sid + ' for uid ' + req.params.uid);
-    res.send('add the fav');
+exports.add = function (req, res) {
+    User.updateOne({ _id: req.query.uid }, {
+        $push: {
+            fav: {
+                $each: [
+                    {
+                        sid: req.query.sid
+                    }
+                ],
+                $sort: {sid : -1}
+            }
+        }
+    }, function (err, docs) {
+        
+    });
+    res.send('add ' + req.query.sid + ' to ' + req.query.uid);
+}
+
+exports.remove = function (req, res) {
+    User.updateOne({_id: req.query.uid}, {
+        $pull: {
+            fav: {
+                $eq: req.query.sid
+            }
+        }
+    });
 }

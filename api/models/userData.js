@@ -17,6 +17,13 @@ var userSlipSchema = new Schema({
     }
 });
 
+var userFavSchema = new Schema({
+    sid: {
+        type: String,
+        required: 'slip id missing'
+    }
+});
+
 var userSchema = new Schema({
     _id: {
         type: String,
@@ -30,7 +37,8 @@ var userSchema = new Schema({
         type: String,
         required: 'email missing'
     },
-    slip: [userSlipSchema]
+    slip: [userSlipSchema],
+    fav: [userFavSchema]
 });
 
 module.exports = mongoose.model('userData', userSchema);

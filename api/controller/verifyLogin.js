@@ -1,6 +1,8 @@
 'use strict';
 
 var firebase = require('./FirebaseAdmin');
+var User = require('../models/userData');
+var Barcode = require('../models/barcodeData');
 
 exports.verify = function (req, res) {
     var uid = req.query.uid;
@@ -14,70 +16,75 @@ exports.verify = function (req, res) {
         return null;
     }
 
-    var ref = firebase.database().ref('USER_DATA/' + uid);
-    ref.once('value').then(async function (snapshot) {
-        if (snapshot.val() == null) {
-
-            const genBarF = async () => {
-                var barcode = genBarcode()
-                    .then(function () {
-                        return barcode;
-                    });
-            }
-
+    User.findById(uid, function (err, docs) {
+        if (docs == null) {
             function setBarF(barcode) {
                 console.log(barcode);
-                firebase.database().ref('USER_DATA').child(uid).set({
+                var newUser = new User({
+                    _id: uid,
                     barcode: barcode,
-                    email: email,
+                    email: email
+                });
+                newUser.save(function (err, docs) {
+                    console.log('new account created!');
+                    recordBarcode(barcode);
                 });
             }
 
-            function setBar(barcode) {
-                console.log(barcode + 'bar');
+            function recordBarcode(barcode) {
+                var newBarcode = new Barcode({
+                    _id: barcode,
+                    uid: uid
+                });
+                newBarcode.save(function (err, docs) {
+                    console.log('record new barcode!');
+                });
             }
-            // genBarF().then(setBar);
 
             genBarcode(setBarF);
-        }
-        res.json({
-            status: 'ok',
-            message: 'login successful',
-        });
-    });
 
-    /**
-     * TODO
-     *      Check if there's uid exist
-     *      if false => gennewbarcode and set for
-     *      USER_DATA/<uid>/email
-     */
+            res.json({
+                status: 'ok',
+                message: 'login successful',
+            });
+        }
+        else {
+            res.json({
+                status: 'ok',
+                message: 'login successful',
+            });
+        }
+    });
 }
 
-async function genBarcode(_callback) {
+function genBarcode(_callback) {
 
     var isDuplicate = true;
-
-    while (isDuplicate) {
-
-        var result = '593040';  // start with 593040
-        result += randMinMax(0, 99999999).toString();  // random another 8 digits
-
-        console.log('Generate...');
-
-        await firebase.database().ref('BARCODE_DATA').child(result)
-            .once('value').then(function (snapshot) {
-                if (snapshot.val() != null) {
-                    console.log('gen again');
-                }
-                else {
-                    isDuplicate = false;
-                    console.log('gotcha!');
-                    _callback(result);
-                    return result;
-                }
-            });
+    var result = '593040';  // start with 593040
+    var random = randMinMax(0, 99999999).toString();  // random another 8 digits
+    if(random.length != 8) {
+        for(var i = 0; i < 8-random.length; i++) {
+            random = '0' + random;
+        }
     }
+    result += random;
+
+    console.log('Generate...');
+
+    User.find({ barcode: result }, function (err, docs) {
+        if (docs[0] == null) {
+            console.log(docs);
+            isDuplicate = false;
+            console.log('gotcha!');
+            _callback(result);
+            return result;
+        }
+        else {
+            console.log(docs);
+            console.log('gen again');
+            return genBarcode(_callback);
+        }
+    });
 }
 
 function randMinMax(min, max) {

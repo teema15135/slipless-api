@@ -20,5 +20,10 @@ app.use(bodyParser.json());
 var routes = require('./api/routes/urlRoutes');
 routes(app);
 
+// handle image get
+app.get('/image/slip/:sid', function(req, res) {
+    res.sendFile(__dirname + '/out/' + req.params.sid + '.jpg');
+});
+
 app.listen(port);
 console.log('Running RestAPI at port ' + port);

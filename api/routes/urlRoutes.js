@@ -2,9 +2,9 @@
 
 module.exports = function(app) {
 
-    var barcode = require('../controller/barcodeGet.1');
-    var chompusudsuay = require('../controller/chompusudsuay.1');
-    var verifyLogin = require('../controller/verifyLogin.1');
+    var barcode = require('../controller/barcodeGet');
+    var chompusudsuay = require('../controller/chompusudsuay');
+    var verifyLogin = require('../controller/verifyLogin');
     var slip = require('../controller/getSlip');
     var userSlip = require('../controller/userSlip');
     var favorite = require('../controller/favorite');
