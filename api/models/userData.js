@@ -14,6 +14,10 @@ var userSlipSchema = new Schema({
     total_price: {
         type: Number,
         required: 'total price missing'
+    },
+    store_name: {
+        type: String,
+        required: 'store name missing'
     }
 });
 

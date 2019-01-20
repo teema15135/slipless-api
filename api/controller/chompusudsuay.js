@@ -57,7 +57,8 @@ exports.send = async function (req, res) {
                         slip: {
                             date_time: input.date_time,
                             slip_id: timestamp,
-                            total_price: input.total_price
+                            total_price: input.total_price,
+                            store_name: slip.store.name
                         }
                     }
                 }, function (err, docs) {

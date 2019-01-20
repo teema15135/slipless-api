@@ -7,7 +7,7 @@ module.exports = function(app) {
     var verifyLogin = require('../controller/verifyLogin');
     var slip = require('../controller/getSlip');
     var userSlip = require('../controller/userSlip');
-    var favorite = require('../controller/favorite');
+    var bookmark = require('../controller/bookmark');
 
     app.route('/getBarcode')
         .get(barcode.getIt);
@@ -27,8 +27,8 @@ module.exports = function(app) {
     app.route('/allSlip')
         .get(userSlip.getAll);
 
-    app.route('/fav')
-        .get(favorite.get)
-        .post(favorite.add);
+    app.route('/bookmark')
+        .get(bookmark.get)
+        .post(bookmark.add);
     
 };
