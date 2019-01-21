@@ -1,0 +1,43 @@
+{
+    "UID": "59304074134296",
+    "store": {
+        "name": "7-twelve",
+        "branch": "หนองไผ่ ขอนแก่น",
+        "tax_id": "123456789",
+        "tele": "042-204562",
+        "reg_id": "987654"
+    },
+    "pos_no": "#458284868",
+    "date_time": 15474759680000,
+    "items_data": [
+        {
+            "num_of_item": 3,
+            "item_name": "ครีมอาบน้ำ โคโดโมะ",
+            "item_price": 99.0
+        },
+        {
+            "num_of_item": 1,
+            "item_name": "แผ่น CD",
+            "item_price": 20.0
+        },
+        {
+            "num_of_item": 1,
+            "item_name": "นมข้นหวาน",
+            "item_price": 20.0
+        },
+        {
+            "num_of_item": 2,
+            "item_name": "นมเปรี้ยวดัชมิล",
+            "item_price": 12.0
+        },
+        {
+            "num_of_item": 1,
+            "item_name": "เลย์ โนริสาหร่าย",
+            "item_price": 56.0
+        }
+    ],
+    "total_price": 207.0,
+    "total_item": 8,
+    "cash": 300.0,
+    "change": 96.0
+}
