@@ -8,6 +8,7 @@ module.exports = function(app) {
     var slip = require('../controller/getSlip');
     var userSlip = require('../controller/userSlip');
     var bookmark = require('../controller/bookmark');
+    var point = require('../controller/point');
 
     app.route('/getBarcode')
         .get(barcode.getIt);
@@ -31,4 +32,6 @@ module.exports = function(app) {
         .get(bookmark.get)
         .post(bookmark.add);
     
+    app.route('/point')
+        .get(point.get);
 };

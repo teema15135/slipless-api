@@ -1,5 +1,7 @@
 'use strict';
 
+var mongoose = require('mongoose');
+
 var User = require('../models/userData');
 var Barcode = require('../models/barcodeData');
 var Slip = require('../models/slipData');
@@ -47,52 +49,80 @@ exports.send = async function (req, res) {
             });
             return null;
         }
-        User.findById(bdoc.uid, function (err, udoc) {
-            console.log(slip);
+        User.findById(bdoc.uid, function (err, u_doc) {
+            // console.log(slip);
             var newSlip = new Slip(slip);
             newSlip.save(function (err, doc) {
-                console.log(timestamp);
-                User.updateOne({ _id: bdoc.uid }, {
+                // console.log(timestamp);
+                User.updateOne({ _id: bdoc.uid }, {             // push a little silp data
                     $push: {
                         slip: {
                             date_time: input.date_time,
                             slip_id: timestamp,
                             total_price: input.total_price,
-                            store_name: slip.store.name
+                            store_name: input.store.name
                         }
                     }
                 }, function (err, docs) {
                 });
+                User.findOne({ _id: bdoc.uid, "point.point_store_name": input.store.name }, function (err, p_doc) {      // add point
+                    if (p_doc == null) {
+                        User.updateOne({ _id: bdoc.uid }, {
+                            $push: {
+                                point: {
+                                    point_store_name: input.store.name,
+                                    earned_point: input.point
+                                }
+                            }
+                        }, function (err, doc) {
+                            console.log('dont have store before');
+                        });
+                    } else {
+                        User.updateOne({ _id: bdoc.uid, "point.point_store_name": input.store.name }, {
+                            $inc: {
+                                "point.$.earned_point": input.point
+                            }
+                        }, function(err, doc){
+                            console.log(doc);
+                        });
+                    }
+
+                    //     var id = -1;
+                    //     point.forEach(element => {
+                    //         if (element.point_store_name == input.store.name) {
+                    //             id = element._id;
+                    //         }
+                    //     });
+                    //     if (id != -1) {
+                    //         console.log(id);
+                    //         User.updateOne({ _id: id }, {
+                    //             $inc: {
+                    //                 earned_point: input.point
+                    //             }
+                    //         }, function (err, doc) {
+                    //             console.log('add point');
+                    //             console.log(doc);
+                    //         });
+                    //     }
+                    //     else {
+                    //         var p_tmstp = Number(new Date());
+                    //         User.updateOne({ _id: bdoc.uid }, {
+                    //             $push: {
+                    //                 point: {
+                    //                     _id: p_tmstp,
+                    //                     point_store_name: input.store.name,
+                    //                     earned_point: input.point
+                    //                 }
+                    //             }
+                    //         }, function (err, doc) {
+                    //             console.log('dont have store before');
+                    //         });
+                    //     }
+                });
+                res.json({
+                    message: 'ok'
+                });
             });
         });
     });
-
-    // await root.ref('API_DATA').orderByChild('barcode_num').equalTo(input_Barcode)
-    //     .on('child_added', async function (snapshot) {
-    //         // console.log('Found!');
-    //         var user_email;
-    //         await root.ref('API_DATA/' + snapshot.key).once('value').then(function (snaps) {
-    //             user_email = snapshot.val().email;
-    //             console.log(user_email);
-    //         });
-    //         console.log(user_email);
-    //         console.log("Pushing Data to firebase...");
-    //         var slip_ID = root.ref('SLIP_DATA').push(slip).path.pieces_[1]; // push slip data to firebase and got slip id
-    //         await root.ref('USER_DATA').orderByChild('email').equalTo(user_email)
-    //             .on('child_added', async function (snap) {
-    //                 console.log(snap.key);
-    //                 await root.ref('USER_DATA/' + snap.key + '/slip').push({
-    //                     date_time: input.date_time,
-    //                     slip_id: slip_ID,
-    //                     total_price: input.total_price
-    //                 });
-    //                 console.log("Pushed slip " + slip_ID + " for user barcode " + input_Barcode);
-    //             });
-
-    //     });
-
-    // admin.database().ref('USER_DATA');
-    // ref.push(obj).path.pieces_[1]
-
-    // var slip_ID = root.ref('SLIP_DATA').push(slip).path.pieces_[1]; // push slip data to firebase and got slip id
 }

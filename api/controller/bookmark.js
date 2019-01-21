@@ -14,7 +14,8 @@ exports.add = function (req, res) {
             fav: {
                 $each: [
                     {
-                        sid: req.query.sid
+                        sid: req.query.sid,
+                        slip_name: req.body.slip_name
                     }
                 ],
                 $sort: {sid : -1}

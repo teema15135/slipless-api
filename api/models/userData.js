@@ -25,6 +25,21 @@ var userFavSchema = new Schema({
     sid: {
         type: String,
         required: 'slip id missing'
+    },
+    slip_name: {
+        type: String,
+        default: 'สลิปที่ไม่มีชื่อ'
+    }
+});
+
+var userPointSchema = new Schema({
+    point_store_name: {
+        type: String,
+        required: 'store name missing'
+    },
+    earned_point: {
+        type: Number,
+        required: 'point missing'
     }
 });
 
@@ -42,7 +57,8 @@ var userSchema = new Schema({
         required: 'email missing'
     },
     slip: [userSlipSchema],
-    fav: [userFavSchema]
+    fav: [userFavSchema],
+    point: [userPointSchema]
 });
 
 module.exports = mongoose.model('userData', userSchema);
