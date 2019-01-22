@@ -36,7 +36,7 @@ exports.build = async function (data) {
 
 
             let file = await __dirname + '/out/slips/' + data._id + '.pdf';
-            let fileout = __dirname + '/out/slips/' + data._id + '-1';
+            let fileout = __dirname + '/out/slips/' + data._id;
 
             let opts = {
                 format: 'jpeg',
