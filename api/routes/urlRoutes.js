@@ -9,6 +9,8 @@ module.exports = function(app) {
     var userSlip = require('../controller/userSlip');
     var bookmark = require('../controller/bookmark');
     var point = require('../controller/point');
+    var slipImage = require('../controller/slipImage');
+    var profileImage = require('../controller/profileImage');
 
     app.route('/getBarcode')
         .get(barcode.getIt);
@@ -34,4 +36,10 @@ module.exports = function(app) {
     
     app.route('/point')
         .get(point.get);
+    
+    app.route('/image/slip/:sid')
+        .get(slipImage.get);
+
+    app.route('/image/profile/:uid')
+        .get(profileImage.get);
 };

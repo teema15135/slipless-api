@@ -1,14 +1,14 @@
 <style type="text/css">
     @font-face {
-        font-family: 'RSU';
-        src: url('../assets/RSU_Regular');
+        font-family: 'RSU Regular';
+        src: url('../assets/RSU_Regular.ttf') format('truetype');
     }
     html {
         height: fit-content;
         width: 100%;
     }
     body {
-        font-family: 'RSU';
+        font-family: 'RSU Regular';
         font-weight:200;
         width: 100%;
         height: fit-content;
@@ -77,6 +77,9 @@
 </style>
 
 <html>
+    <head>
+        <meta charset="utf-8">
+    </head>
     <body>
         <img class='center_img' src='https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/fc2a1a7761c6819e85a0ffeb84cfd228.jpg?alt=media&token=2f8ff940-5890-49a3-9ebf-038b605186d4'>
         <p class='shop_name'>{{store.name}}</p>
@@ -105,13 +108,13 @@
         <table>
             {{#each items_data as |item_data|}}
             <tr>
-                <td>
+                <td width="20%">
                     {{item_data.num_of_item}}
                 </td>
-                <td>
+                <td width="60%">
                     {{item_data.item_name}}
                 </td>
-                <td>
+                <td width="20%">
                     {{item_data.item_price}} ฿
                 </td>
             </tr>

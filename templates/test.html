@@ -1,20 +1,23 @@
 <style type="text/css">
     @font-face {
         font-family: 'RSU';
-        src: url('../assets/RSU_Regular');
+        src: url('assets/RSU_Regular.ttf');
     }
     html {
         height: fit-content;
+        width: 100%;
     }
     body {
         font-family: 'RSU';
         font-weight:200;
+        width: 100%;
         height: fit-content;
-        margin-left: 15px;
-        background-image: url("bg-paper.jpg");
+        margin-top: 30px;
+        background-image: url("https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/20190117_191057000_iOS.png?alt=media&token=660a3f00-e951-4dbf-9399-8e5344f8dc1a");
     }
     table {
         width:100%;
+        margin-left: 15px;
     }
     table tr td {
         margin-top: 1px;
@@ -30,6 +33,7 @@
         margin-bottom: 1px;
         margin-top: 1px;
         line-height: 5px;
+        margin-left: 15px;
     }
     .branch_name {
         text-align: center;
@@ -42,6 +46,7 @@
         margin-bottom: 1px;
         margin-top: 1px;
         line-height: 10px;
+        margin-left: 15px;
     }
     .bold_text {
         font-weight: bold;
@@ -50,17 +55,33 @@
         text-align: center;
         font-size: 13px;
         margin-bottom: 10px;
-        margin-top: 10px;
+        margin-top: 50px;
+    }
+    .slipless_text {
+        line-height: 2px;
+        text-align: center;
+        font-size: 11px;
     }
     .head_text {
         font-size: 12px;
+        margin-left: 15px;
     }
+    .center_img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        width: 20%;
+}
 
 </style>
 
 <html>
-    <body background="bg-graph.gif">
-        <img src="./triangle.png" width="200" height="200">
+    <head>
+        <meta charset='utf-8'>
+    </head>
+    <body>
+        <img class='center_img' src='https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/fc2a1a7761c6819e85a0ffeb84cfd228.jpg?alt=media&token=2f8ff940-5890-49a3-9ebf-038b605186d4'>
         <p class='shop_name'>{{store.name}}</p>
         <p class='branch_name'>สาขา {{store.branch}}</p>
         <p class='branch_name'>โทร. {{store.tele}}</p>
@@ -134,6 +155,8 @@
         </table>
 
         <p class='end_text'>THANK YOU</p>
+        <p class='slipless_text'>By Slipless</p>
+
 
     </body>
 </html>

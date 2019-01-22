@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-
 var User = require('../models/userData');
 var Barcode = require('../models/barcodeData');
 var Slip = require('../models/slipData');
+
+var ImageBuilder = require('./imageBuilder');
 
 exports.send = async function (req, res) {
 
@@ -49,6 +49,9 @@ exports.send = async function (req, res) {
             });
             return null;
         }
+
+        ImageBuilder.build(slip);
+
         User.findById(bdoc.uid, function (err, u_doc) {
             // console.log(slip);
             var newSlip = new Slip(slip);
@@ -86,38 +89,6 @@ exports.send = async function (req, res) {
                             console.log(doc);
                         });
                     }
-
-                    //     var id = -1;
-                    //     point.forEach(element => {
-                    //         if (element.point_store_name == input.store.name) {
-                    //             id = element._id;
-                    //         }
-                    //     });
-                    //     if (id != -1) {
-                    //         console.log(id);
-                    //         User.updateOne({ _id: id }, {
-                    //             $inc: {
-                    //                 earned_point: input.point
-                    //             }
-                    //         }, function (err, doc) {
-                    //             console.log('add point');
-                    //             console.log(doc);
-                    //         });
-                    //     }
-                    //     else {
-                    //         var p_tmstp = Number(new Date());
-                    //         User.updateOne({ _id: bdoc.uid }, {
-                    //             $push: {
-                    //                 point: {
-                    //                     _id: p_tmstp,
-                    //                     point_store_name: input.store.name,
-                    //                     earned_point: input.point
-                    //                 }
-                    //             }
-                    //         }, function (err, doc) {
-                    //             console.log('dont have store before');
-                    //         });
-                    //     }
                 });
                 res.json({
                     message: 'ok'

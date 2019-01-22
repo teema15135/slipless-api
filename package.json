@@ -14,9 +14,14 @@
     "express": "^4.16.4",
     "firebase-admin": "^6.4.0",
     "fs": "0.0.1-security",
+    "fs-extra": "^7.0.1",
+    "handlebars": "^4.0.12",
     "http": "0.0.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.3",
     "nodemon": "^1.18.8",
+    "pdf-poppler": "^0.2.1",
+    "puppeteer": "^1.11.0",
     "text2png": "^2.1.0"
   }
 }
