@@ -21,6 +21,12 @@ exports.send = async function (req, res) {
         }
         items.push(obj);
     }
+
+    console.log(input.coupons.length);
+    console.log(input.coupons);
+    var hasCoupon = ((input.coupons.length == 0 || input.coupons == null) ? false : true);
+    console.log(hasCoupon);
+
     var timestamp = Number(new Date());
     var slip = {
         _id: timestamp,
@@ -38,6 +44,18 @@ exports.send = async function (req, res) {
         },
         total_item: input.total_item,
         total_price: input.total_price
+    }
+
+    var coupons = [];
+    if (hasCoupon) {
+        for(var i = 0; i < input.coupons.length; i++) {
+            coupons.push({
+                coupon_name: input.coupons[i].name,
+                coupon_expire: input.coupons[i].expire,
+                coupon_barcode: input.coupons[i].barcode,
+                coupon_description: input.coupons[i].description
+            });
+        }
     }
 
     var input_Barcode = input.UID;
@@ -89,6 +107,15 @@ exports.send = async function (req, res) {
                             console.log(doc);
                         });
                     }
+                });
+                console.log(coupons);
+                User.updateOne({ _id: bdoc.uid }, {
+                    $addToSet: {
+                        coupon: {
+                            $each: coupons
+                        }
+                    }
+                }, function (err, doc) {
                 });
                 res.json({
                     message: 'ok'

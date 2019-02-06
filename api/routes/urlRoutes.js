@@ -32,7 +32,8 @@ module.exports = function(app) {
 
     app.route('/bookmark')
         .get(bookmark.get)
-        .post(bookmark.add);
+        .post(bookmark.add)
+        .delete(bookmark.remove);
     
     app.route('/point')
         .get(point.get);

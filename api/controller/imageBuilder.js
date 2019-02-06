@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const fsOld = require('fs');
 const fs = require('fs-extra');
 const hbs = require('handlebars');
 const path = require('path');
@@ -47,6 +48,9 @@ exports.build = async function (data) {
             await pdf.convert(file, opts)
                 .then(res => {
                     console.log('Successfully converted');
+                    fsOld.unlink(file, function() {
+                        console.log('Remove pdf file');
+                    })
                 })
                 .catch(error => {
                     console.error(error);

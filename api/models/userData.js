@@ -43,6 +43,25 @@ var userPointSchema = new Schema({
     }
 });
 
+var userCouponSchema = new Schema({
+    coupon_name: {
+        type: String,
+        required: 'coupon name missing'
+    },
+    coupon_expire: {
+        type: String,
+        required: 'coupon expire missing'
+    },
+    coupon_barcode: {
+        type: String,
+        required: 'coupon barcode missing'
+    },
+    coupon_description: {
+        type: String,
+        required: 'coupon description missing'
+    }
+})
+
 var userSchema = new Schema({
     _id: {
         type: String,
@@ -58,7 +77,8 @@ var userSchema = new Schema({
     },
     slip: [userSlipSchema],
     fav: [userFavSchema],
-    point: [userPointSchema]
+    point: [userPointSchema],
+    coupon: [userCouponSchema],
 });
 
 module.exports = mongoose.model('userData', userSchema);

@@ -4,7 +4,7 @@ var User = require('../models/userData');
 
 exports.get = function (req, res) {
     User.findById(req.query.uid, function (err, docs) {
-        res.json(docs.fav);
+        res.json({bookmark: docs.fav});
     });
 }
 
@@ -31,8 +31,12 @@ exports.remove = function (req, res) {
     User.updateOne({_id: req.query.uid}, {
         $pull: {
             fav: {
-                $eq: req.query.sid
+                sid: {
+                    $eq: req.query.sid
+                }
             }
         }
+    }, function(err, doc) {
+        res.json(doc);
     });
 }
