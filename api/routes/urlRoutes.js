@@ -9,6 +9,7 @@ module.exports = function(app) {
     var userSlip = require('../controller/userSlip');
     var bookmark = require('../controller/bookmark');
     var point = require('../controller/point');
+    var coupon = require('../controller/coupon');
     var slipImage = require('../controller/slipImage');
     var profileImage = require('../controller/profileImage');
 
@@ -37,6 +38,10 @@ module.exports = function(app) {
     
     app.route('/point')
         .get(point.get);
+
+    app.route('/coupon')
+        .get(coupon.get)
+        .delete(coupon.del);
     
     app.route('/image/slip/:sid')
         .get(slipImage.get);

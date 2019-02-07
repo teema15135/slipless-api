@@ -53,7 +53,8 @@ exports.send = async function (req, res) {
                 coupon_name: input.coupons[i].name,
                 coupon_expire: input.coupons[i].expire,
                 coupon_barcode: input.coupons[i].barcode,
-                coupon_description: input.coupons[i].description
+                coupon_description: input.coupons[i].description,
+                coupon_store: input.store.name
             });
         }
     }

@@ -48,6 +48,10 @@ var userCouponSchema = new Schema({
         type: String,
         required: 'coupon name missing'
     },
+    coupon_store: {
+        type: String,
+        required: 'store is missing'
+    },
     coupon_expire: {
         type: String,
         required: 'coupon expire missing'

@@ -13,6 +13,7 @@ exports.getIt = (req, res) => {
             status: 'error',
             message: 'uid is required',
         });
+        return null;
     }
 
     User.findOne({ _id: uid }, function (err, docs) {
